@@ -1,70 +1,17 @@
-import styled from 'styled-components';
+import {
+  Main,
+  Header,
+  GameSection,
+  TileContainer,
+  TileRow,
+  Tile,
+  KeyboardSection,
+  KeyboardRow,
+  KeyboardButton,
+  Flex,
+} from './styledComponents';
+import { BackspaceIcon } from './icons';
 import './App.css';
-
-const Main = styled.main`
-  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  width: 100%;
-
-  border-bottom: 1px solid #3a3a3c;
-  margin-bottom: 20px;
-
-  font-weight: 700;
-  font-size: 3.6rem;
-  letter-spacing: 0.2rem;
-  text-transform: uppercase;
-`;
-
-const GameSection = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-`;
-
-const TileContainer = styled.div`
-  display: grid;
-  grid-template-rows: repeat(6, 1fr);
-  grid-gap: 5px;
-
-  height: 420px;
-  width: 350px;
-`;
-
-const TileRow = styled.div`
-  width: 100%;
-
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 5px;
-`;
-
-const Tile = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 2px solid #3a3a3c;
-  border-radius: 5px;
-  font-size: 3.2rem;
-  font-weight: bold;
-  line-height: 3.2rem;
-  text-transform: uppercase;
-`;
 
 function App() {
   return (
@@ -81,6 +28,31 @@ function App() {
           ))}
         </TileContainer>
       </GameSection>
+      <KeyboardSection>
+        <KeyboardRow>
+          {['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'].map((key) => (
+            <KeyboardButton>{key}</KeyboardButton>
+          ))}
+        </KeyboardRow>
+        <KeyboardRow>
+          <Flex item={0.5} />
+          {['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'].map((key) => (
+            <KeyboardButton>{key}</KeyboardButton>
+          ))}
+          <Flex item={0.5} />
+        </KeyboardRow>
+        <KeyboardRow>
+          {['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'].map(
+            (key) => (
+              <KeyboardButton
+                flex={['enter', 'backspace'].includes(key) ? 1.5 : 1}
+              >
+                {key === 'backspace' ? <BackspaceIcon /> : key}
+              </KeyboardButton>
+            )
+          )}
+        </KeyboardRow>
+      </KeyboardSection>
     </Main>
   );
 }
