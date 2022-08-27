@@ -16,7 +16,9 @@ import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import './App.css';
 
-const API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en';
+const RAND_WORD_URL =
+  'https://random-word-api.herokuapp.com/word?length=5&lang=en';
+const VERIFY_WORD_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en';
 
 const keyboardRows = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -27,8 +29,6 @@ const keyboardRows = [
 const allKeys = keyboardRows.flat();
 
 const wordLength = 5;
-
-const targetWord = 'money';
 
 function App() {
   const [guesses, setGuesses] = useState({
@@ -47,8 +47,14 @@ function App() {
     4: Array.from({ length: wordLength }).fill(''),
     5: Array.from({ length: wordLength }).fill(''),
   });
+  const [targetWord, setTargetWord] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
-  // const [isShared, setIsShared] = useState(false);
+
+  useEffect(() => {
+    fetch(RAND_WORD_URL, { method: 'GET' })
+      .then((res) => res.json())
+      .then((res) => setTargetWord(res[0]));
+  }, []);
 
   let letterIndex = useRef(0);
   let round = useRef(0);
@@ -151,7 +157,7 @@ function App() {
   };
 
   const fetchWord = (word) => {
-    return fetch(`${API_URL}/${word}`, {
+    return fetch(`${VERIFY_WORD_URL}/${word}`, {
       method: 'GET',
     })
       .then((res) => res.json())
