@@ -50,7 +50,7 @@ function App() {
     5: Array.from({ length: wordLength }).fill(''),
   });
   const [targetWord, setTargetWord] = useState('');
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isWinModalVisible, setWinModalVisible] = useState(false);
 
   useEffect(() => {
     fetch(RAND_WORD_URL, { method: 'GET' })
@@ -155,7 +155,7 @@ function App() {
 
   const win = () => {
     document.removeEventListener('keydown', handleKeyDown);
-    setModalVisible(true);
+    setWinModalVisible(true);
   };
 
   const fetchWord = (word) => {
@@ -229,8 +229,8 @@ function App() {
         </KeyboardSection>
       </Main>
       <Modal
-        isOpen={isModalVisible}
-        onRequestClose={() => setModalVisible(false)}
+        isOpen={isWinModalVisible}
+        onRequestClose={() => setWinModalVisible(false)}
         style={{
           content: {
             top: '50%',
