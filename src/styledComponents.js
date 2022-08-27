@@ -132,6 +132,27 @@ const Heading = styled.h2`
   text-transform: uppercase;
 `;
 
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  margin: 16px auto;
+`;
+
+const Button = styled.button`
+  font-size: 18px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid 3a3a3c;
+
+  transition: background-color 0.2s ease-in;
+
+  &:hover {
+    background-color: #818384;
+  }
+`;
+
 export {
   Main,
   Header,
@@ -144,4 +165,6 @@ export {
   KeyboardButton,
   Flex,
   Heading,
+  Row,
+  Button,
 };

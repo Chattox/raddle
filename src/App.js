@@ -10,6 +10,8 @@ import {
   KeyboardButton,
   Flex,
   Heading,
+  Row,
+  Button,
 } from './styledComponents';
 import { BackspaceIcon } from './icons';
 import { useEffect, useRef, useState } from 'react';
@@ -179,6 +181,10 @@ function App() {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
@@ -237,6 +243,9 @@ function App() {
         }}
       >
         <Heading>You win!</Heading>
+        <Row>
+          <Button onClick={refreshPage}>Play again?</Button>
+        </Row>
       </Modal>
     </>
   );
