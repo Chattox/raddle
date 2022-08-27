@@ -55,10 +55,24 @@ function App() {
   const [isLoseModalVisible, setLoseModalVisible] = useState(false);
 
   useEffect(() => {
-    fetch(RAND_WORD_URL, { method: 'GET' })
-      .then((res) => res.json())
-      .then((res) => setTargetWord(res[0]));
+    const getWord = async () => {
+      const word = await getRandomWord();
+      const verify = await fetchWord(word);
+      if (verify.title === 'No Definitions Found') {
+        console.log(`Invalid word chosen: "${word}". Rerolling...`);
+        getWord();
+      }
+      setTargetWord(word);
+    };
+    getWord();
   }, []);
+
+  const getRandomWord = () => {
+    return fetch(RAND_WORD_URL, { method: 'GET' })
+      .then((res) => res.json())
+      .then((res) => res[0])
+      .catch((err) => console.log(err));
+  };
 
   let letterIndex = useRef(0);
   let round = useRef(0);
