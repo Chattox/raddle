@@ -21,6 +21,7 @@ import './App.css';
 const RAND_WORD_URL =
   'https://random-word-api.herokuapp.com/word?length=5&lang=en';
 const VERIFY_WORD_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en';
+const DICTIONARY_LOOKUP_URL = 'https://www.dictionary.com/browse';
 
 const keyboardRows = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -51,6 +52,7 @@ function App() {
   });
   const [targetWord, setTargetWord] = useState('');
   const [isWinModalVisible, setWinModalVisible] = useState(false);
+  const [isLoseModalVisible, setLoseModalVisible] = useState(false);
 
   useEffect(() => {
     fetch(RAND_WORD_URL, { method: 'GET' })
@@ -128,6 +130,10 @@ function App() {
       setMarkers(updatedMarkers);
       win();
       return;
+    } else if (_round === 5) {
+      setMarkers(updatedMarkers);
+      lose();
+      return;
     }
 
     if (leftoverIndices.length) {
@@ -156,6 +162,11 @@ function App() {
   const win = () => {
     document.removeEventListener('keydown', handleKeyDown);
     setWinModalVisible(true);
+  };
+
+  const lose = () => {
+    document.removeEventListener('keydown', handleKeyDown);
+    setLoseModalVisible(true);
   };
 
   const fetchWord = (word) => {
@@ -243,6 +254,37 @@ function App() {
         }}
       >
         <Heading>You win!</Heading>
+        <Row>
+          <Button onClick={refreshPage}>Play again?</Button>
+        </Row>
+      </Modal>
+      <Modal
+        isOpen={isLoseModalVisible}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}
+      >
+        <Heading>You lose!</Heading>
+        <Row>
+          <h3>
+            The word was "
+            <a
+              href={`${DICTIONARY_LOOKUP_URL}/${targetWord}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {targetWord}
+            </a>
+            "
+          </h3>
+        </Row>
         <Row>
           <Button onClick={refreshPage}>Play again?</Button>
         </Row>
