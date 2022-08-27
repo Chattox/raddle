@@ -64,6 +64,18 @@ const Tile = styled.div`
   font-weight: bold;
   line-height: 3.2rem;
   text-transform: uppercase;
+
+  ${({ hint }) => {
+    if (hint === 'green') {
+      return `background-color: #6aaa64;`;
+    }
+    if (hint === 'yellow') {
+      return `background-color: #b59f3b;`;
+    }
+    if (hint === 'grey') {
+      return `background-color: #3a3a3c;`;
+    }
+  }}
 `;
 
 const KeyboardSection = styled.section`
@@ -110,6 +122,16 @@ const Flex = styled.div`
   ${({ item }) => `flex: ${item};`}
 `;
 
+const Heading = styled.h2`
+  border-bottom: 1px solid #3a3a3c;
+  padding-bottom: 8px;
+
+  font-weight: 700;
+  font-size: 3.6rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+`;
+
 export {
   Main,
   Header,
@@ -121,4 +143,5 @@ export {
   KeyboardRow,
   KeyboardButton,
   Flex,
+  Heading,
 };
