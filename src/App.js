@@ -53,6 +53,8 @@ function App() {
   const [targetWord, setTargetWord] = useState('');
   const [isWinModalVisible, setWinModalVisible] = useState(false);
   const [isLoseModalVisible, setLoseModalVisible] = useState(false);
+  const [spentLetters, setSpentLetters] = useState([]);
+  const [safeLetters, setSafeLetters] = useState([]);
 
   useEffect(() => {
     const getWord = async () => {
@@ -135,6 +137,7 @@ function App() {
       if (guessedLetter === letter) {
         updatedMarkers[_round][i] = 'green';
         tempWord[i] = '';
+        setSafeLetters((prev) => [...prev, guessedLetter]);
       } else {
         leftoverIndices.push(i);
       }
@@ -154,16 +157,13 @@ function App() {
       leftoverIndices.forEach((i) => {
         const guessedLetter = guesses[_round][i];
         const correctPositionOfLetter = tempWord.indexOf(guessedLetter);
-        console.log('LETTER: ' + guessedLetter);
-
-        console.log(tempWord + ' ' + correctPositionOfLetter + ' ' + i);
         if (tempWord.includes(guessedLetter) && correctPositionOfLetter !== i) {
-          console.log('YELLOW');
           updatedMarkers[_round][i] = 'yellow';
           tempWord[correctPositionOfLetter] = '';
+          setSafeLetters((prev) => [...prev, guessedLetter]);
         } else {
-          console.log('GREY');
           updatedMarkers[_round][i] = 'grey';
+          setSpentLetters((prev) => [...prev, guessedLetter]);
         }
       });
     }
@@ -244,6 +244,9 @@ function App() {
                   key={key}
                   onClick={() => handleClick(key)}
                   flex={['enter', 'backspace'].includes(key) ? 1.5 : 1}
+                  spent={
+                    spentLetters.includes(key) && !safeLetters.includes(key)
+                  }
                 >
                   {key === 'backspace' ? <BackspaceIcon /> : key}
                 </KeyboardButton>

@@ -105,10 +105,17 @@ const KeyboardButton = styled.button`
 
   border 0;
   border-radius: 4px;
-  background-color: #818384;
   font-weight: bold;
   text-transform: uppercase;
   color: #d7dadc;
+
+  ${({ spent }) => {
+    if (spent === true) {
+      return `background-color: #3a3a3c;`;
+    } else {
+      return `background-color: #818384;`;
+    }
+  }}
 
   cursor: pointer;
   user-select: none;
