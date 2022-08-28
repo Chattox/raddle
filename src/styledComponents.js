@@ -76,11 +76,13 @@ const Tile = styled.div`
       return `background-color: #3a3a3c;`;
     }
   }}
+
+  transition: background-color 0.5s ease;
 `;
 
 const KeyboardSection = styled.section`
   height: 200px;
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
 `;
@@ -98,7 +100,7 @@ const KeyboardButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding: 1;
   margin: 0 6px 0 0;
   height: 58px;
   ${({ item }) => (item ? `flex: ${item};` : `flex: 1;`)}
@@ -116,6 +118,8 @@ const KeyboardButton = styled.button`
       return `background-color: #818384;`;
     }
   }}
+
+  transition: background-color 0.5s ease;
 
   cursor: pointer;
   user-select: none;
