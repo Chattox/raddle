@@ -110,10 +110,10 @@ const KeyboardButton = styled.button`
   color: #d7dadc;
 
   ${({ spent }) => {
-    if (spent === 'true') {
+    if (spent === true) {
       return `background-color: #3a3a3c;`;
     } else {
-      return `background-color: #990000;`;
+      return `background-color: #818384;`;
     }
   }}
 
