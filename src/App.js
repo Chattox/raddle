@@ -54,6 +54,7 @@ function App() {
   const [isWinModalVisible, setWinModalVisible] = useState(false);
   const [isLoseModalVisible, setLoseModalVisible] = useState(false);
   const [spentLetters, setSpentLetters] = useState([]);
+  const [safeLetters, setSafeLetters] = useState([]);
 
   useEffect(() => {
     const getWord = async () => {
@@ -136,6 +137,7 @@ function App() {
       if (guessedLetter === letter) {
         updatedMarkers[_round][i] = 'green';
         tempWord[i] = '';
+        setSafeLetters((prev) => [...prev, guessedLetter]);
       } else {
         leftoverIndices.push(i);
       }
@@ -158,6 +160,7 @@ function App() {
         if (tempWord.includes(guessedLetter) && correctPositionOfLetter !== i) {
           updatedMarkers[_round][i] = 'yellow';
           tempWord[correctPositionOfLetter] = '';
+          setSafeLetters((prev) => [...prev, guessedLetter]);
         } else {
           updatedMarkers[_round][i] = 'grey';
           setSpentLetters((prev) => [...prev, guessedLetter]);
@@ -241,7 +244,9 @@ function App() {
                   key={key}
                   onClick={() => handleClick(key)}
                   flex={['enter', 'backspace'].includes(key) ? 1.5 : 1}
-                  spent={spentLetters.includes(key)}
+                  spent={
+                    spentLetters.includes(key) && !safeLetters.includes(key)
+                  }
                 >
                   {key === 'backspace' ? <BackspaceIcon /> : key}
                 </KeyboardButton>
